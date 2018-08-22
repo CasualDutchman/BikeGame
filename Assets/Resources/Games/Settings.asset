@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec90623357d62f84c80894db8279d0c5, type: 3}
+  m_Name: Settings
+  m_EditorClassIdentifier: 
+  menuSprite: {fileID: 21300000, guid: 1fcd9c9709c357544a6d750b5d2ba1f6, type: 3}
+  gameName: Instellingen
+  gameDesc: Verander instellingen van de training, de moeilijkheid van de spellen
+    en de instellingen van de applicatie.
+  gameExplain: 
+  explainButtons: []
+  order: 2
+  isGame: 0
+  gameObject: {fileID: 1809163996959286, guid: dd4ea1a3d9b683d4896304cd807ac503, type: 2}

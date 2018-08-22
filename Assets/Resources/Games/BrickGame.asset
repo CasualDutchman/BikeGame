@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec90623357d62f84c80894db8279d0c5, type: 3}
+  m_Name: BrickGame
+  m_EditorClassIdentifier: 
+  menuSprite: {fileID: 21300000, guid: 2cfc1049fb455f545927539bb4c70660, type: 3}
+  gameName: BrickOut
+  gameDesc: Doe iets, wees gezellig.
+  gameExplain: 'Raak alle stenen met de bal en laat ze allemaal verdwijnen.
+
+'
+  explainButtons:
+  - sprite: {fileID: 21300016, guid: 2165b83af6b2ae14888d16efae7364e8, type: 3}
+    expliainText: Beweeg Links en Rechts
+  - sprite: {fileID: 21300004, guid: 2165b83af6b2ae14888d16efae7364e8, type: 3}
+    expliainText: Schiet de bal weg
+  order: 0
+  isGame: 1
+  gameObject: {fileID: 1487303141022942, guid: e84cf9b1f3b101e469a9cb4ebdf95d91, type: 2}
