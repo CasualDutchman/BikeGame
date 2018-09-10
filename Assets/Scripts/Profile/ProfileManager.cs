@@ -79,6 +79,10 @@ public class ProfileManager : MonoBehaviour {
         if (profiles.Count == 1)
             return;
 
+        if (index == currentProfileInUse) {
+            currentProfileInUse = 0;
+        }
+
         profiles.RemoveAt(index);
         for (int i = 0; i < profiles.Count; i++) {
             profiles[i].SetIndex(i);

@@ -16,24 +16,33 @@ public class Menu : MonoBehaviour {
     public ControllerScrollSection scrollSection;
 
     void Start () {
-        if (Time.time < 1) {
-            LoadFirstTime();
-        }
+        Cursor.visible = false;
 
         LoadAllGames();
-    }
-
-    void LoadFirstTime() {
-        Cursor.visible = false;
     }
 
     void LoadAllGames() {
         GameAsset[] ga = Resources.LoadAll<GameAsset>("Games");
         gameAssets = new GameAsset[ga.Length];
+        GameAsset[] nonGames = new GameAsset[3];
+
+        int assetIndex = 0, nonGameIndex = 0;
+
         for (int i = 0; i < ga.Length; i++) {
             GameAsset game = ga[i];
-            if (gameAssets[game.order] == null) {
+            if (game.isGame) {
                 gameAssets[game.order] = game;
+                assetIndex++;
+            } else {
+                nonGames[nonGameIndex] = game;
+                nonGameIndex++;
+            }
+        }
+
+        for (int i = 0; i < nonGames.Length; i++) {
+            if (nonGames[i] != null) {
+                gameAssets[assetIndex] = nonGames[i];
+                assetIndex++;
             }
         }
 

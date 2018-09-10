@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec90623357d62f84c80894db8279d0c5, type: 3}
+  m_Name: PongGame
+  m_EditorClassIdentifier: 
+  menuSprite: {fileID: 21300000, guid: 2cfc1049fb455f545927539bb4c70660, type: 3}
+  gameName: Pong
+  gameDesc: Het klassieke pong spel, nu met een fiets
+  gameExplain: 'Laat de bal niet voorbij jouw lijn gaan
+
+'
+  explainButtons:
+  - sprite: {fileID: 21300018, guid: 2165b83af6b2ae14888d16efae7364e8, type: 3}
+    expliainText: Beweeg naar boven en beneden
+  - sprite: {fileID: 21300004, guid: 2165b83af6b2ae14888d16efae7364e8, type: 3}
+    expliainText: Start bal
+  order: 1
+  isGame: 1
+  gameObject: {fileID: 1180872192870028, guid: 1c88549b30a148d4485113630cc5c04e, type: 2}

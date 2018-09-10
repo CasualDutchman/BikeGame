@@ -18,6 +18,6 @@ MonoBehaviour:
 '
   gameExplain: 
   explainButtons: []
-  order: 1
+  order: 0
   isGame: 0
   gameObject: {fileID: 1238000513425690, guid: 1e8605ed068e04048b81a7da4607a4cb, type: 2}

@@ -63,19 +63,19 @@ public static class ControllerInput {
     }
 
     public static bool PressButtonUp() {
-        return Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown("joystick button 3");
+        return Input.GetKeyDown(KeyCode.I)  || Input.GetButtonDown("Button up");
     }
 
     public static bool PressButtonDown() {
-        return Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.K) || Input.GetKeyDown("joystick button 0");
+        return Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.K)  || Input.GetButtonDown("Button down");
     }
 
     public static bool PressButtonLeft() {
-        return Input.GetKeyDown(KeyCode.RightShift) || Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown("joystick button 2");
+        return Input.GetKeyDown(KeyCode.RightShift) || Input.GetKeyDown(KeyCode.J)  || Input.GetButtonDown("Button left");
     }
 
     public static bool PressButtonRight() {
-        return Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.L) || Input.GetKeyDown("joystick button 1");
+        return Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.L)  || Input.GetButtonDown("Button right");
     }
 
     //axis

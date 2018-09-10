@@ -28,6 +28,8 @@ public class ProfileManagerUI : MonoBehaviour {
     Transform[] components;
 
     void Start() {
+        Cursor.visible = false;
+
         manager = ProfileManager.instance;
 
         scrollSection.Create(profileItemPrefab, ProfileManager.instance.profiles.ToArray(), Method);

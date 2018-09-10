@@ -17,6 +17,6 @@ MonoBehaviour:
     en de instellingen van de applicatie.
   gameExplain: 
   explainButtons: []
-  order: 2
+  order: 0
   isGame: 0
   gameObject: {fileID: 1809163996959286, guid: dd4ea1a3d9b683d4896304cd807ac503, type: 2}

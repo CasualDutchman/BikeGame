@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 2165b83af6b2ae14888d16efae7364e8
-timeCreated: 1532521207
+timeCreated: 1535548760
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -16,6 +16,16 @@ TextureImporter:
     21300018: arrow_updown
     21300020: buttons_10
     21300022: buttons_11
+    21300024: panel_white
+    21300026: bar
+    21300028: green_bar
+    21300030: red_bar
+    21300032: yellow_bar
+    21300034: red_outline
+    21300036: red_outline_thin
+    21300038: circle
+    21300040: speedometer
+    21300042: speedo_meter_pointer
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -260,6 +270,104 @@ TextureImporter:
         y: 356
         width: 78
         height: 78
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: panel_white
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 255
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 8, y: 8, z: 8, w: 8}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: bar
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 310
+        width: 143
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 5, y: 5, z: 5, w: 5}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: red_outline
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 155
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 8, y: 8, z: 8, w: 8}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: red_outline_thin
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 155
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 8, y: 8, z: 8, w: 8}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: circle
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 55
+        width: 198
+        height: 198
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: speedometer
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 65
+        width: 174
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: speedo_meter_pointer
+      rect:
+        serializedVersion: 2
+        x: 490
+        y: 264
+        width: 9
+        height: 81
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

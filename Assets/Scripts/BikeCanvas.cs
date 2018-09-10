@@ -19,6 +19,9 @@ public class BikeCanvas : MonoBehaviour {
     public Image bikeTimer;
     public GameObject playButton;
 
+    //end screen
+    public GameObject endScreen;
+
     //change profile menu
     public GameObject changeProfile;
     public ControllerScrollSection scrollSection;
@@ -28,4 +31,8 @@ public class BikeCanvas : MonoBehaviour {
 
     //profileLeft
     public Text profileName, profileResistance, profileDifficultyLevel, profileTime, profileDefaultSpeed;
+
+    //too slow timer
+    public GameObject tooSlowObject;
+    public Text exclamationMark, speedExplainText, stopText;
 }

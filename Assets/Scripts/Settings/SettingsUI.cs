@@ -18,6 +18,8 @@ public class SettingsUI : MonoBehaviour {
     int maxSelection = 2;
 
     void Start() {
+        Cursor.visible = false;
+
         settings = Settings.instance;
 
         components = new RectTransform[] { volumeText.rectTransform, quitText.rectTransform };

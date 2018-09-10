@@ -17,6 +17,7 @@ public class GameStarter : MonoBehaviour {
                 GameObject go = Instantiate(ga.gameObject);
                 if (ga.isGame) {
                     go.GetComponentInChildren<Game>().gameAsset = ga;
+                    go.GetComponentInChildren<Game>().debugGame = false;
                 }
             }
         }

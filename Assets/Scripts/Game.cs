@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public enum GameScreen { None, Explain, Profile, Game, End }
 
-[RequireComponent(typeof(BikeManager))]
 public class Game : MonoBehaviour {
 
     public static float TOO_SLOW_SPEED = 30;// below 30 is too slow
@@ -13,18 +13,19 @@ public class Game : MonoBehaviour {
     public static float GOOD_SPEED = 50;    // between 40 - 50 is good
     public static float FAST_SPEED = 60;    // bewteen 50 - 60 is fast
                                             // above 60 is too fast
+    public bool debugGame = false;
 
     GameScreen gameScreen = GameScreen.None;
 
     BikeCanvas bc;
 
-    Profile currentProfile;
+    protected Profile currentProfile;
 
     public GameAsset gameAsset;
 
     BikeManager bikeManager;
 
-    protected BikeSpeed bikespeed;
+    protected BikeSpeed bikeSpeed;
     float bikeTimer = 0;
 
     RectTransform speedGaugeImage;
@@ -35,16 +36,31 @@ public class Game : MonoBehaviour {
 
     float gameTimer;
 
+    string[] speedExplainText = new string[] { "Te traag!", "Te snel!" };
+    string stopText = "Stoppen in {0}";
+    float tooFastSlowTimer;
+    float maxTooSlowTime = 15f;
+
 	void Start () {
-        bikeManager = GetComponent<BikeManager>();
+        Cursor.visible = false;
 
-        SetupCanvas();
+        if (!debugGame) {
+            bikeManager = BikeManager.instance;
 
-        UpdateProfile(ProfileManager.instance.GetCurrentProfile());
+            SetupCanvas();
+
+            UpdateProfile(ProfileManager.instance.GetCurrentProfile());
+        }
 
         Setup();
 
-        gameScreen = GameScreen.Explain;
+        if (!debugGame) {
+            ChangeScreen(GameScreen.Explain);
+        }else {
+            bikeSpeed = BikeSpeed.GOOD;
+            gameScreen = GameScreen.Game;
+            OnPlay();
+        }
     }
 	
     void UpdateProfile(Profile p) {
@@ -55,6 +71,8 @@ public class Game : MonoBehaviour {
         bc.profileDifficultyLevel.text = ProfileManagerUI.difficultNames[currentProfile.gameDifficulty];
         bc.profileDefaultSpeed.text = currentProfile.targetSpeed.ToString();
         bc.profileTime.text = currentProfile.time.ToString() + " minuten";
+
+        OnChangeProfile();
     }
 
     void SetupCanvas() {
@@ -81,7 +99,7 @@ public class Game : MonoBehaviour {
 
 	void Update () {
         if(gameScreen == GameScreen.Explain) {
-            if (bikespeed == BikeSpeed.GOOD) {
+            if (bikeSpeed == BikeSpeed.GOOD) {
                 startTimer += Time.deltaTime;
                 if (startTimer >= 3) {
                     canPlay = true;
@@ -129,26 +147,71 @@ public class Game : MonoBehaviour {
                 startTimer = 0;
             }
         }
-        else if(gameScreen == GameScreen.Game){
+        else if(gameScreen == GameScreen.Game) {
             OnUpdate();
 
-            gameTimer += Time.deltaTime;
+            if (!debugGame) {
+                if (bikeSpeed == BikeSpeed.TOO_FAST || bikeSpeed == BikeSpeed.TOO_SLOW) {
+                    if (!bc.tooSlowObject.activeSelf) {
+                        bc.tooSlowObject.SetActive(true);
+                    }
 
-            int min = Mathf.FloorToInt(gameTimer / 60f);
-            int sec = (int)gameTimer % 60;
+                    tooFastSlowTimer += Time.deltaTime;
 
-            bc.gameTime.text = min + ":" + ((sec < 10) ? "0" + sec : sec.ToString());
-            bc.gameTimer.fillAmount = gameTimer / (currentProfile.time * 60);
+                    Color col = bc.exclamationMark.color;
+                    col.a = tooFastSlowTimer - Mathf.FloorToInt(tooFastSlowTimer);
+                    bc.exclamationMark.color = col;
 
-            if (gameTimer == currentProfile.time * 60) {
-                EndGame();
+                    if (bikeSpeed == BikeSpeed.TOO_SLOW) {
+                        bc.speedExplainText.text = speedExplainText[0];
+                    } else {
+                        bc.speedExplainText.text = speedExplainText[1];
+                    }
+
+                    bc.stopText.text = string.Format(stopText, (maxTooSlowTime - tooFastSlowTimer).ToString("F0"));
+
+                    if (tooFastSlowTimer >= maxTooSlowTime) {
+                        SceneManager.LoadScene(0);
+                    }
+                } else {
+                    if (bc.tooSlowObject.activeSelf) {
+                        tooFastSlowTimer = 0;
+                        bc.tooSlowObject.SetActive(false);
+                    }
+                }
+
+                gameTimer += Time.deltaTime;
+
+                int min = Mathf.FloorToInt(gameTimer / 60f);
+                int sec = (int)gameTimer % 60;
+
+                bc.gameTime.text = min + ":" + ((sec < 10) ? "0" + sec : sec.ToString());
+                bc.gameTimer.fillAmount = gameTimer / (currentProfile.time * 60);
+
+                if (gameTimer >= currentProfile.time * 60) {
+                    EndGame();
+                }
             }
+        } else if (gameScreen == GameScreen.End) {
+            if (ControllerInput.PressButtonLeft()) {
+                SceneManager.LoadScene(1);
+            }
+            if (ControllerInput.PressButtonDown()) {
+                ChangeScreen(GameScreen.Game);
+                gameTimer = 0;
+            }
+
+            ControllerInput.PressMenu();
         }
 
         ControllerInput.ResetToggles();
     }
 
     protected void EndGame() {
+        ChangeScreen(GameScreen.End);
+
+        bc.gameTime.text = currentProfile.time * 60 + "";
+        bc.gameTimer.fillAmount = 1;
 
     }
 
@@ -165,11 +228,15 @@ public class Game : MonoBehaviour {
         gameScreen = screen;
         bc.explainScreen.SetActive(screen == GameScreen.Explain);
         bc.changeProfile.SetActive(screen == GameScreen.Profile);
+        bc.endScreen.SetActive(screen == GameScreen.End);
 
         if (screen == GameScreen.Profile) {
             bc.scrollSection.Create(bc.profilePrefab, ProfileManager.instance.profiles.ToArray(), Method);
             UpdateProfileSelection();
         }
+
+        if (screen == GameScreen.Game)
+            OnPlay();
     }
 
     public bool Method(GameObject go, object game) {
@@ -178,7 +245,8 @@ public class Game : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        UpdateBikeSpeed();
+        if(!debugGame)
+            UpdateBikeSpeed();
 
         if (gameScreen == GameScreen.Game) {
             OnFixedUpdate();
@@ -186,6 +254,10 @@ public class Game : MonoBehaviour {
     }
 
     protected virtual void Setup() { }
+    protected virtual void Reset() { }
+
+    protected virtual void OnChangeProfile() { }
+    protected virtual void OnPlay() { }
 
     protected virtual void OnUpdate() { }
     protected virtual void OnFixedUpdate() { }
@@ -194,7 +266,7 @@ public class Game : MonoBehaviour {
         bikeTimer += Time.deltaTime;
         if (bikeTimer >= 0.1f) {
             bikeTimer = 0;
-            bikespeed = GetBikeSpeed(bikeManager.bikeSpeed);
+            bikeSpeed = GetBikeSpeed(bikeManager.bikeSpeed);
         }
         UpdateBikeUI();
     }
@@ -202,23 +274,15 @@ public class Game : MonoBehaviour {
     void UpdateBikeUI() {
         if (bc != null) {
             speedText.text = bikeManager.bikeSpeed.ToString("F1");
-            //float f = Mathf.Clamp((bikeManager.bikeSpeed - TOO_SLOW_SPEED) * 5.33333f, 0, 160);
-            //speedGaugeImage.localEulerAngles = new Vector3(0, 0, -f);
 
             float nul = 0;
-
-            if (bikeManager.bikeSpeed > currentProfile.targetSpeed - 15) {
-                nul = bikeManager.bikeSpeed - (currentProfile.targetSpeed - 15);
-                nul *= 0.0333f;
+            if (bikeManager.bikeSpeed > currentProfile.targetSpeed - 20) {
+                nul = bikeManager.bikeSpeed - (currentProfile.targetSpeed - 20);
+                nul *= 0.025f;
             }
-
             nul = Mathf.Clamp(nul, 0f, 1f);
 
             speedGaugeImage.localEulerAngles = new Vector3(0, 0, -(nul * 160));
-
-            //targetspeed - 15 = 0;
-            //targetspeed      = 80;
-            //targetspeed + 15 = 160;
         }
     }
 

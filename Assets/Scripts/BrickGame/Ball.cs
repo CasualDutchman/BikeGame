@@ -15,7 +15,7 @@ public class Ball : MonoBehaviour {
 	}
 
     void OnCollisionEnter2D(Collision2D col) {
-        if (col.gameObject.layer.Equals(LayerMask.NameToLayer("Fall")))
+        if (col.gameObject.layer.Equals(LayerMask.NameToLayer("Fail")))
             game.Fail();
 
         bool b = col.gameObject.layer.Equals(LayerMask.NameToLayer("Bouncer"));

@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(LodeProtocol))]
 public class BikeManager : MonoBehaviour {
 
+    public static BikeManager instance;
+
     public static float TOO_SLOW_SPEED = 10;
     public static float SLOW_SPEED = 10;
     public static float GOOD_SPEED = 10;
@@ -18,6 +20,15 @@ public class BikeManager : MonoBehaviour {
     public float bikeSpeed;
 
     public float nonProtocolSpeed = 40;
+
+    public void Awake() {
+        if (Time.time > 1) {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+        DontDestroyOnLoad(this);
+    }
 
     void Start () {
         if (useProtocol) {

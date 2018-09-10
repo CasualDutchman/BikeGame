@@ -31,6 +31,14 @@ public class BrickGame : Game {
         SetupBricks();
     }
 
+    protected override void Reset() {
+        base.Reset();
+
+        SetupBricks();
+
+        ResetBall();
+    }
+
     void SetupBricks() {
         int[] line = new int[Random.Range(2, 5)];
         for (int i = 0; i < line.Length; i++) {
@@ -65,6 +73,10 @@ public class BrickGame : Game {
             }
         }
 
+        if(Mathf.Abs(ball.transform.position.x) > 2 || ball.transform.position.y > 8) {
+            ResetBall();
+        }
+
         ControllerInput.PressMenu(ballVelocity.magnitude <= 0);
     }
 
@@ -75,7 +87,7 @@ public class BrickGame : Game {
     }
 
     float GetBouncerSpeed() {
-        switch (bikespeed) {
+        switch (bikeSpeed) {
             case BikeSpeed.TOO_SLOW: return 0;
             case BikeSpeed.SLOW: return bouncerSpeed * 0.3f;
             default: case BikeSpeed.GOOD: return bouncerSpeed;
@@ -91,11 +103,15 @@ public class BrickGame : Game {
 
     public void OnDeleteBrick() {
         if (transform.childCount - 1 <= 0) {
-            EndGame();
+            Reset();
         }
     }
 
     public void Fail() {
+        ResetBall();
+    }
+
+    void ResetBall() {
         ballVelocity = Vector2.zero;
         ball.transform.SetParent(bouncer.transform);
         ball.transform.localPosition = originBall;
