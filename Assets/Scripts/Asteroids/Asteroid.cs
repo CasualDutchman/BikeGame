@@ -20,7 +20,7 @@ public class Asteroid : MonoBehaviour {
 		
 	}
 	
-	void Update () {
+	public void UpdateAsteroid () {
         transform.position += velocity * Time.deltaTime;
         transform.eulerAngles += Vector3.back * rotation * Time.deltaTime;
 
@@ -39,7 +39,7 @@ public class Asteroid : MonoBehaviour {
 
 	}
 
-    public void InitChildren(int newSize) {
+    public void InitChildren(int newSize, Transform parent) {
         size = newSize;
 
         GetComponent<SpriteRenderer>().sortingOrder = 2 - size;
@@ -49,10 +49,10 @@ public class Asteroid : MonoBehaviour {
 
             for (int i = 0; i < children.Length; i++) {
                 Transform tra = game.presetAsteroids[Random.Range(0, game.presetAsteroids.Length)];
-                children[i] = Instantiate(tra, tra.parent);
+                children[i] = Instantiate(tra, parent);
 
                 children[i].localScale = Vector3.one * ScaleFromSize(size - 1);
-                children[i].GetComponent<Asteroid>().InitChildren(size - 1);
+                children[i].GetComponent<Asteroid>().InitChildren(size - 1, parent);
 
                 children[i].gameObject.SetActive(false);
             }
@@ -68,12 +68,20 @@ public class Asteroid : MonoBehaviour {
     }
 
     public void SetNewVelocity() {
-        velocity = Random.insideUnitCircle.normalized * SpeedFromSize();
-        float rand = Random.value * 180 * (1 - SpeedFromSize());
+        velocity = Random.insideUnitCircle.normalized * FromSize();
+        float rand = Random.value * 180 * (1 - FromSize());
         rotation = rand * 0.5f;
     }
 
-    float SpeedFromSize() {
+    public void SetNewVelocity(Transform trans, Vector2 zero, float radius) {
+        Vector2 begin = zero + Random.insideUnitCircle * radius;
+        velocity = trans.position.ToVector2() - begin;
+        velocity = velocity.normalized * FromSize();
+        float rand = Random.value * 180 * (1 - FromSize());
+        rotation = rand * 0.5f;
+    }
+
+    float FromSize() {
         switch (size) {
             case 0: return 2f;
             case 1: return 1f;

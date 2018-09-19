@@ -18,14 +18,14 @@ public class Protocol
 public class LodeProtocol : MonoBehaviour
 {
 	// Constants
-	public const string GET_POWER = "PM";
+	public const string GET_POWER = "PM"; //read resistance
 	public const string GET_SPEED_INT = "RM";
 	public const string GET_SPEED_FLOAT = "RN";
 	public const string GET_HEART_RATE = "HR";
 	public const string GET_STATUS = "RS";
 	public const string GET_VERSION = "VR";
 	public const string GET_SERIAL_NUMBER = "SN";
-	public const string SET_POWER = "SP";
+	public const string SET_POWER = "SP"; //set resistance
 	public const string SET_TORQUE = "ST";
 
 	// Settings

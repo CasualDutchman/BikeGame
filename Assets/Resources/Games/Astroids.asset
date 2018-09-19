@@ -3,7 +3,7 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -13,13 +13,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuSprite: {fileID: 21300000, guid: 7afbf0a73b0933d4e9c78571e692e539, type: 3}
   gameName: Asteroids
-  gameDesc: Speel flappy bird, maar dan met een vliegtuig
-  gameExplain: Ontwijk de obstakels. Glijd naar beneden en vlieg omhoog.
+  gameDesc: "Het originele Asteroids spel in een nieuw jasje! Shiet alle astero\xEFden
+    stuk en laat ze je niet raken."
+  gameExplain: "Ontwijk alle astero\xEFden en probeer je stuk te schieten. Als ze
+    zijn geraakt, kunnen er meer kleinere komen!"
   explainButtons:
-  - sprite: {fileID: 21300004, guid: 2165b83af6b2ae14888d16efae7364e8, type: 3}
-    expliainText: Vlieg omhoog
-  - sprite: {fileID: 21300000, guid: 2165b83af6b2ae14888d16efae7364e8, type: 3}
-    expliainText: Herstarten
+  - sprite: {fileID: 21300008, guid: 2165b83af6b2ae14888d16efae7364e8, type: 3}
+    expliainText: Vlieg vooruit
+  - sprite: {fileID: 21300016, guid: 2165b83af6b2ae14888d16efae7364e8, type: 3}
+    expliainText: Draai
+  - sprite: {fileID: 21300014, guid: 2165b83af6b2ae14888d16efae7364e8, type: 3}
+    expliainText: Shiet
   order: 3
   isGame: 1
-  gameObject: {fileID: 1547989947565666, guid: 54221c89f8650244c918a33c005b2ad9, type: 2}
+  gameObject: {fileID: 1675978556030550, guid: 69bf59f26e637734782bfaa230b24122, type: 2}

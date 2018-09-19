@@ -4,44 +4,47 @@ using UnityEngine;
 
 public class AsteroidsShip : MonoBehaviour {
 
-    Rigidbody2D rigid;
-
     public AsteroidsGame game;
 
-    public float maxSpeed;
-    public float rotationSpeed;
+    public SpriteRenderer spriteRenderer;
+    public AnimationCurve curve;
+
+    bool invincible = false;
+    float timer;
 
 	void Start () {
-        rigid = GetComponent<Rigidbody2D>();
-    }
-	
-	void Update () {
-        transform.Rotate(Vector3.back * ControllerInput.GetHorizontal() * rotationSpeed * Time.deltaTime);
 
-        if (transform.position.x < -9) {
-            transform.position += Vector3.right * 18;
-        }
-        if (transform.position.x > 9) {
-            transform.position += Vector3.left * 18;
-        }
-        if (transform.position.y > 6) {
-            transform.position += Vector3.down * 7.5f;
-        }
-        if (transform.position.y < -1.5) {
-            transform.position += Vector3.up * 7.5f;
-        }
     }
 
-    void FixedUpdate() {
-        if (ControllerInput.GetVertical() > 0) {
-            rigid.AddForce(-transform.up.ToVector2() * maxSpeed, ForceMode2D.Force);
+    private void Update() {
+        if (invincible) {
+            timer += Time.deltaTime;
+            if (timer >= 3) {
+                invincible = false;
+                timer = 0;
+
+                Color color = spriteRenderer.color;
+                color.a = 1;
+                spriteRenderer.color = color;
+
+                return;
+            }
+
+            Color col = spriteRenderer.color;
+            col.a = curve.Evaluate(timer - Mathf.Floor(timer));
+            spriteRenderer.color = col;
         }
     }
 
     void OnCollisionEnter2D(Collision2D col) {
-        if (col.gameObject.layer.Equals(LayerMask.NameToLayer("Fail"))) {
+        if (col.gameObject.layer.Equals(LayerMask.NameToLayer("Fail")) && !invincible) {
             //game.Fail();
             //Stop();
+            //Debug.Log("Hit");
+
+            game.HitRock();
+
+            invincible = true;
         }
     }
 }

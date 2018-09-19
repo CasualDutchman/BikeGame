@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(LodeProtocol))]
 public class BikeManager : MonoBehaviour {
 
+    ProfileManager profileManager;
+
     public static BikeManager instance;
 
     public static float TOO_SLOW_SPEED = 10;
@@ -16,10 +18,12 @@ public class BikeManager : MonoBehaviour {
     public bool useProtocol = true;
 
     LodeProtocol protocol;
+    Protocol sendPower;
 
     public float bikeSpeed;
 
     public float nonProtocolSpeed = 40;
+    public float nonPower = 2;
 
     public void Awake() {
         if (Time.time > 1) {
@@ -28,6 +32,8 @@ public class BikeManager : MonoBehaviour {
         }
         instance = this;
         DontDestroyOnLoad(this);
+
+        profileManager = GetComponent<ProfileManager>();
     }
 
     void Start () {
@@ -40,7 +46,8 @@ public class BikeManager : MonoBehaviour {
             protocol.Connect();
 
             protocol.ResponseReceived += ProtocolGetSpeed;
-            protocol.AddCall(LodeProtocol.GET_POWER);
+            protocol.AddCall(LodeProtocol.GET_SPEED_FLOAT);
+            sendPower = protocol.AddCall(LodeProtocol.SET_POWER, 26);
         }
     }
 
@@ -57,11 +64,20 @@ public class BikeManager : MonoBehaviour {
         }
     }
 
+    void FixedUpdate() {
+        if (sendPower != null && useProtocol) {
+            sendPower.parameter = 80 + profileManager.profiles[profileManager.currentProfileInUse].resistance * 20;
+        }
+        if (!useProtocol) {
+            nonPower = 80 + profileManager.profiles[profileManager.currentProfileInUse].resistance * 20;
+        }
+    }
+
     private void ProtocolGetSpeed(Protocol usedProt, string data) {
         switch (usedProt.command) {
-            case LodeProtocol.GET_POWER:
+            case LodeProtocol.GET_SPEED_FLOAT:
                 try {
-                    bikeSpeed = int.Parse(data) / 10;
+                    bikeSpeed = int.Parse(data) / 10f;
                 } catch (System.Exception) {
                     string t = "";
                     foreach (char c in data.ToCharArray()) {
