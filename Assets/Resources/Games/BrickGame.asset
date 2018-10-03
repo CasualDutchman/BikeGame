@@ -3,7 +3,7 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuSprite: {fileID: 21300000, guid: 2cfc1049fb455f545927539bb4c70660, type: 3}
   gameName: BrickOut
-  gameDesc: Doe iets, wees gezellig.
+  gameDesc: Raak alle stenen met de bal en laat ze allemaal verdwijnen.
   gameExplain: 'Raak alle stenen met de bal en laat ze allemaal verdwijnen.
 
 '

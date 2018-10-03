@@ -74,7 +74,7 @@ public class BrickGame : Game {
         }
 
         if(Mathf.Abs(ball.transform.position.x) > 2 || ball.transform.position.y > 8) {
-            ResetBall();
+            //ResetBall();
         }
 
         ControllerInput.PressMenu(ballVelocity.magnitude <= 0);

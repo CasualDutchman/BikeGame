@@ -23,7 +23,6 @@ public class BikeManager : MonoBehaviour {
     public float bikeSpeed;
 
     public float nonProtocolSpeed = 40;
-    public float nonPower = 2;
 
     public void Awake() {
         if (Time.time > 1) {
@@ -66,10 +65,7 @@ public class BikeManager : MonoBehaviour {
 
     void FixedUpdate() {
         if (sendPower != null && useProtocol) {
-            sendPower.parameter = 80 + profileManager.profiles[profileManager.currentProfileInUse].resistance * 20;
-        }
-        if (!useProtocol) {
-            nonPower = 80 + profileManager.profiles[profileManager.currentProfileInUse].resistance * 20;
+            sendPower.parameter = 0 + profileManager.profiles[profileManager.currentProfileInUse].resistance * 10;
         }
     }
 

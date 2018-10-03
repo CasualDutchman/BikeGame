@@ -208,10 +208,10 @@ public class ProfileManagerUI : MonoBehaviour {
         } else if (selection == 7) {//target speed
             componentIndexes[selection] = Mathf.Clamp(componentIndexes[selection], 10, 90);
         } else if (selection == 8) {//resistance
-            if (componentIndexes[selection] >= 8) {
-                componentIndexes[selection] = 1;
-            } else if (componentIndexes[selection] < 1) {
-                componentIndexes[selection] = 7;
+            if (componentIndexes[selection] > 20) {
+                componentIndexes[selection] = 0;
+            } else if (componentIndexes[selection] < 0) {
+                componentIndexes[selection] = 20;
             }
         } else {//time
             componentIndexes[selection] = Mathf.Clamp(componentIndexes[selection], 1, 10);
