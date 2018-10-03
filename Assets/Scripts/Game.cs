@@ -41,6 +41,9 @@ public class Game : MonoBehaviour {
     float tooFastSlowTimer;
     float maxTooSlowTime = 15f;
 
+    /// <summary>
+    /// When the screen starts
+    /// </summary>
 	void Start () {
         Cursor.visible = false;
 
@@ -63,6 +66,10 @@ public class Game : MonoBehaviour {
         }
     }
 	
+    /// <summary>
+    /// Update the screen details to the currently selected profile
+    /// </summary>
+    /// <param name="p"></param>
     void UpdateProfile(Profile p) {
         currentProfile = p;
 
@@ -75,6 +82,9 @@ public class Game : MonoBehaviour {
         OnChangeProfile();
     }
 
+    /// <summary>
+    /// Setup the canvas witht he right information
+    /// </summary>
     void SetupCanvas() {
         GameObject canvas = Instantiate(Resources.Load<GameObject>("Canvas"));
         bc = canvas.GetComponent<BikeCanvas>();
@@ -97,8 +107,12 @@ public class Game : MonoBehaviour {
         bc.gameTimer.fillAmount = 0;
     }
 
+    /// <summary>
+    /// Updates every frame
+    /// Mostly for button presses
+    /// </summary>
 	void Update () {
-        if(gameScreen == GameScreen.Explain) {
+        if(gameScreen == GameScreen.Explain) { //When the first 'explain' screen in on
             if (bikeSpeed == BikeSpeed.GOOD) {
                 startTimer += Time.deltaTime;
                 if (startTimer >= 3) {
@@ -125,7 +139,7 @@ public class Game : MonoBehaviour {
                 ControllerInput.PressMenu();
             }
         } 
-        else if (gameScreen == GameScreen.Profile) {
+        else if (gameScreen == GameScreen.Profile) { //When selecting a new profile
             if (ControllerInput.PressArrowUp()) {
                 bc.scrollSection.GoUp();
                 UpdateProfileSelection();
@@ -147,7 +161,7 @@ public class Game : MonoBehaviour {
                 startTimer = 0;
             }
         }
-        else if(gameScreen == GameScreen.Game) {
+        else if(gameScreen == GameScreen.Game) { //When playing the game
             OnUpdate();
 
             if (!debugGame) {
@@ -192,7 +206,7 @@ public class Game : MonoBehaviour {
                     EndGame();
                 }
             }
-        } else if (gameScreen == GameScreen.End) {
+        } else if (gameScreen == GameScreen.End) { //When game is down
             if (ControllerInput.PressButtonLeft()) {
                 SceneManager.LoadScene(1);
             }
@@ -207,6 +221,9 @@ public class Game : MonoBehaviour {
         ControllerInput.ResetToggles();
     }
 
+    /// <summary>
+    /// End the game
+    /// </summary>
     protected void EndGame() {
         ChangeScreen(GameScreen.End);
 
@@ -224,6 +241,10 @@ public class Game : MonoBehaviour {
         bc.showProfileTime.text = p.time.ToString() + " minuten";
     }
 
+    /// <summary>
+    /// Called when a particular screen needs to be focussed on
+    /// </summary>
+    /// <param name="screen"></param>
     void ChangeScreen(GameScreen screen) {
         gameScreen = screen;
         bc.explainScreen.SetActive(screen == GameScreen.Explain);
@@ -239,11 +260,20 @@ public class Game : MonoBehaviour {
             OnPlay();
     }
 
+    /// <summary>
+    /// The Method used by the scrollSelection to instatialize the proper text
+    /// </summary>
+    /// <param name="go"></param>
+    /// <param name="game"></param>
+    /// <returns></returns>
     public bool Method(GameObject go, object game) {
         go.transform.GetChild(0).GetComponent<Text>().text = ((Profile)game).profileName;
         return true;
     }
 
+    /// <summary>
+    /// Updates every fixed amount of frames
+    /// </summary>
     void FixedUpdate() {
         if(!debugGame)
             UpdateBikeSpeed();
@@ -252,6 +282,8 @@ public class Game : MonoBehaviour {
             OnFixedUpdate();
         }
     }
+
+    //Virtual methods used in the child classes of Game.cs
 
     protected virtual void Setup() { }
     protected virtual void Reset() { }
@@ -262,6 +294,9 @@ public class Game : MonoBehaviour {
     protected virtual void OnUpdate() { }
     protected virtual void OnFixedUpdate() { }
 
+    /// <summary>
+    /// Update the bike speed
+    /// </summary>
     void UpdateBikeSpeed() {
         bikeTimer += Time.deltaTime;
         if (bikeTimer >= 0.1f) {
@@ -271,6 +306,9 @@ public class Game : MonoBehaviour {
         UpdateBikeUI();
     }
 
+    /// <summary>
+    /// Update the UI to show the bike speed
+    /// </summary>
     void UpdateBikeUI() {
         if (bc != null) {
             speedText.text = bikeManager.bikeSpeed.ToString("F1");
@@ -286,6 +324,11 @@ public class Game : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Get the speed enum from the speed
+    /// </summary>
+    /// <param name="f"></param>
+    /// <returns></returns>
     BikeSpeed GetBikeSpeed(float f) {
         if (f < currentProfile.targetSpeed - 15) {
             return BikeSpeed.TOO_SLOW;

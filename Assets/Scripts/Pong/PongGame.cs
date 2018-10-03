@@ -14,7 +14,7 @@ public class PongGame : Game {
     public float ballSpeed;
 
     public float bouncerSpeed = 2;
-    public float aiBouncerSpeed = 1;
+    float aiBouncerSpeed = 1;
 
     public TextMesh playerScore, aiScore;
 
@@ -32,6 +32,8 @@ public class PongGame : Game {
 
         playerScore.text = "0";
         aiScore.text = "0";
+
+        aiBouncerSpeed = 1 + currentProfile.gameDifficulty * 0.5f;
     }
 
     protected override void Reset() {
