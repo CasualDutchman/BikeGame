@@ -22,8 +22,8 @@ public class BrickGame : Game {
 
     public Color[] colors;
 
-    protected override void Setup() {
-        base.Setup();
+    protected override void OnPlay() {
+        base.OnPlay();
         originBall = ball.transform.localPosition;
         bouncerLocation = new Vector2(bouncer.transform.position.x, bouncer.transform.position.y);
         bounce = bouncerLocation.x;
@@ -39,10 +39,14 @@ public class BrickGame : Game {
         ResetBall();
     }
 
+    Vector2Int[] rows = new Vector2Int[] { new Vector2Int(1, 3), new Vector2Int(2, 4), new Vector2Int(3, 5) };
+    Vector2Int[] brickLines = new Vector2Int[] { new Vector2Int(2, 5), new Vector2Int(3, 6), new Vector2Int(4, 7) };
+
     void SetupBricks() {
-        int[] line = new int[Random.Range(2, 5)];
+        int[] line = new int[Random.Range(rows[currentProfile.gameDifficulty].x, rows[currentProfile.gameDifficulty].y)];
+
         for (int i = 0; i < line.Length; i++) {
-            line[i] = Random.Range(3, 7);
+            line[i] = Random.Range(brickLines[currentProfile.gameDifficulty].x, brickLines[currentProfile.gameDifficulty].y);
         }
 
         int colorPattern = 2;// Random.Range(0, 3);
